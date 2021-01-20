@@ -1,2 +1,4 @@
-# flutter_practice07
-Flutter Practice 07
+# Flutter Practice 07
+- `SateNotifier` + `Riverpod` Practice
+
+## Reference source
