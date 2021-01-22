@@ -1,4 +1,4 @@
 # Flutter Practice 07
-- `SateNotifier` + `Riverpod` Practice
+- `Riverpod` Practice
 
 ## Reference source
