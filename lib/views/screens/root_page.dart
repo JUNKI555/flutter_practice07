@@ -39,9 +39,7 @@ class RootPage extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: pageType.state.index,
             onTap: (index) {
-              pageType.state = pageType.state.index == PageType.first.index
-                  ? PageType.second
-                  : PageType.first;
+              pageType.state = PageType.values[index];
             },
             items: tabItems,
           ),
