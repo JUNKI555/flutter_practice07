@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'views/screens/root_page.dart';
 
@@ -9,24 +10,26 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        pageTransitionsTheme: const PageTransitionsTheme(
-          builders: <TargetPlatform, PageTransitionsBuilder>{
-            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
-            TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
-          },
+    return ProviderScope(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: <TargetPlatform, PageTransitionsBuilder>{
+              TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+              TargetPlatform.iOS: FadeUpwardsPageTransitionsBuilder(),
+            },
+          ),
         ),
+        darkTheme: ThemeData(brightness: Brightness.dark),
+        initialRoute: '/',
+        routes: <String, WidgetBuilder>{
+          '/': (_) => RootPage(),
+        },
       ),
-      darkTheme: ThemeData(brightness: Brightness.dark),
-      initialRoute: '/',
-      routes: <String, WidgetBuilder>{
-        '/': (_) => RootPage(),
-      },
     );
   }
 }

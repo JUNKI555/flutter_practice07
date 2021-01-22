@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../view_models/bottom_navigation_model.dart';
 import 'first_page.dart';
 import 'second_paage.dart';
+
+final pageTypeProvider = StateProvider<PageType>((ref) => PageType.first);
+
+enum PageType {
+  first,
+  second,
+}
 
 class RootPage extends StatelessWidget {
   final List<Widget> _pageList = <Widget>[
@@ -13,33 +19,34 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<BottomNavigationModel>(
-      create: (_) => BottomNavigationModel(),
-      child: Consumer<BottomNavigationModel>(
-        builder: (context, model, child) {
-          final tabItems = [
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.face),
-              label: '',
-            ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.fastfood),
-              label: '',
-            ),
-          ];
+    return Consumer(
+      builder: (context, watch, child) {
+        final pageType = watch(pageTypeProvider);
 
-          return Scaffold(
-            body: _pageList[model.currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: model.currentIndex,
-              onTap: (index) {
-                model.currentIndex = index;
-              },
-              items: tabItems,
-            ),
-          );
-        },
-      ),
+        final tabItems = [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.face),
+            label: '',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.fastfood),
+            label: '',
+          ),
+        ];
+
+        return Scaffold(
+          body: _pageList[pageType.state.index],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: pageType.state.index,
+            onTap: (index) {
+              pageType.state = pageType.state.index == PageType.first.index
+                  ? PageType.second
+                  : PageType.first;
+            },
+            items: tabItems,
+          ),
+        );
+      },
     );
   }
 }
